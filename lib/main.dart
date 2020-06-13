@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -25,53 +26,82 @@ class HYHomePage extends StatelessWidget {
   }
 }
 
-class HYHomeContent extends StatelessWidget {
+class HYHomeContentLess extends StatelessWidget {
+  final String message;
+
+  HYHomeContentLess(this.message) {
+    print("构造函数被调用");
+  }
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    print("被调用build方法");
+    return Text(message);
+  }
+}
+
+/**
+ * StatefulWidget的生命周期
+ */
+class HYHomeContent extends StatefulWidget {
+  HYHomeContent() {
+    print("1.调用HYHomeContent的constructor方法");
+  }
+  @override
+  _HYHomeContentState createState() {
+    print("2.调用HYHomeContent的createState方法");
+    return _HYHomeContentState();
+  }
+}
+
+class _HYHomeContentState extends State<HYHomeContent> {
+  int _counter = 0;
+  _HYHomeContentState() {
+    print("3.调用_HYHomeContentState的constructor方法");
+  }
+
+  @override
+  void initState() {
+    // 强调：这里是必须调用super
+    super.initState();
+    print("4.调用_HYHomeContentState的initState方法");
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    print("调用_HYHomeContentState的didChangeDependencies方法");
+  }
+
+  @override
+  void didUpdateWidget(HYHomeContent oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    print("didUpdateWidget");
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print("5.调用_HYHomeContentState的build方法");
+    return Column(
       children: [
-        HYHomeProductItem("Apple1", "Macbook1", "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2534506313,1688529724&fm=26&gp=0.jpg"),
-        SizedBox(height: 6,),
-        HYHomeProductItem("Apple2", "Macbook2", "https://dss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=4018557288,1217151095&fm=26&gp=0.jpg"),
-        SizedBox(height: 6,),
-        HYHomeProductItem("Apple3", "Macbook3", "https://dss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1906469856,4113625838&fm=26&gp=0.jpg"),
+        RaisedButton(
+          child: Icon(Icons.add),
+          onPressed: (){
+            setState(() {
+              _counter++;
+            });
+          },
+        ),
+        Text("数字：$_counter")
       ],
     );
   }
-}
-
-  class HYHomeProductItem extends StatelessWidget {
-  final String title;
-  final String desc;
-  final String imageURL;
-  final style1 = TextStyle(fontSize: 25, color: Colors.orange);
-  final style2 = TextStyle(fontSize: 20, color: Colors.green);
-  HYHomeProductItem(this.title, this.desc, this.imageURL);
+  // 销毁的时候调用
   @override
-  Widget build(BuildContext context) {
-
-    return Container(
-      padding: EdgeInsets.all(10),  // 设置内边距
-      decoration: BoxDecoration(
-        border: Border.all(
-          width: 5,  // 设置边框的宽度
-          color: Colors.pink,  // 设置边框颜色
-        )
-      ),  // 装饰
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(title, style: style1,),
-          SizedBox(height: 8,),
-          Text(desc, style: style2,),
-          SizedBox(height: 8,),
-          Image.network(imageURL)
-        ],
-      ),
-    );
+  void dispose() {
+    super.dispose();
+    print("6.调用_HYHomeContentState的dispose方法");
   }
 }
-
 
 
 
