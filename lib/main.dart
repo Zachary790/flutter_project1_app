@@ -37,41 +37,71 @@ class HYHomeContent extends StatefulWidget {
 }
 
 class _HYHomeContentState extends State<HYHomeContent> {
-  @override
+   @override
   Widget build(BuildContext context) {
-//    return ImageDemo01(imageURL: "https://dss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3669917020,2046613997&fm=26&gp=0.jpg",);
-//    return Image.network("https://dss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3669917020,2046613997&fm=26&gp=0.jpg");
-//    return Image(
-//      // 1. 在flutter项目中创建文件夹
-//      // 2.在pubspec.yaml进行配置
-//      image: AssetImage("assets/images/11.jpg"),
-//    );
-      return Image.asset("assets/images/11.jpg");
+      return Container(
+//        color: Colors.red,
+        width: 200,
+        height: 200,
+        alignment: Alignment.center,
+        padding: EdgeInsets.all(20),
+        margin: EdgeInsets.all(10),
+        child: Icon(
+          Icons.pets,
+          size: 50,
+          color: Colors.white,
+        ),
+        transform: Matrix4.rotationZ(0),
+        decoration: BoxDecoration(  // 和color冲突
+          color: Colors.red,
+          border: Border.all(
+            width: 5,
+            color: Colors.purple
+          ),
+          borderRadius: BorderRadius.circular(100),  // 设置圆角
+          boxShadow: [
+            BoxShadow(
+              color: Colors.orange,
+              offset: Offset(10,10),
+              spreadRadius: 5,  // 衍生
+              blurRadius: 10,  // 模糊度
+            )
+          ]
+        ),
+      );
   }
 }
 
-class ImageDemo01 extends StatelessWidget {
-  const ImageDemo01({
+class PaddingDemo extends StatelessWidget{
+  const PaddingDemo({
     Key key,
-    @required this.imageURL,
   }) : super(key: key);
 
-  final String imageURL;
   @override
   Widget build(BuildContext context) {
-    return Image(
-      color: Colors.green,
-      colorBlendMode: BlendMode.colorDodge,
-      image: NetworkImage(
-        imageURL,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),  // const可以去除
+      child: Text("你好啊，小明",style: TextStyle(fontSize: 30),),
+    );
+  }
+
+}
+
+class AlignDemo extends StatelessWidget{
+  const AlignDemo({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(  // == Align
+      alignment: Alignment(1,1),
+      widthFactor: 5,  //child的宽的倍数
+      heightFactor: 5,  //child的高的倍数
+      child: Icon(
+        Icons.pets,
+        size: 50,
       ),
-      width: 200,
-      height: 200,
-      fit: BoxFit.contain,
-      repeat: ImageRepeat.repeat,
-//      alignment: Alignment.topCenter,
-      // 范围：-1，1
-      alignment: Alignment(0, 0),
     );
   }
 
