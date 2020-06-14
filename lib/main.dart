@@ -18,90 +18,63 @@ class HYHomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Center(
-          child: Text("商品列表"),
+            child: Text("基础的widget")
         ),
       ),
       body: HYHomeContent(),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () => print("FloatingActionButton onClick"),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
 
-class HYHomeContentLess extends StatelessWidget {
-  final String message;
-
-  HYHomeContentLess(this.message) {
-    print("构造函数被调用");
-  }
-  @override
-  Widget build(BuildContext context) {
-    print("被调用build方法");
-    return Text(message);
-  }
-}
-
-/**
- * StatefulWidget的生命周期
- */
 class HYHomeContent extends StatefulWidget {
-  HYHomeContent() {
-    print("1.调用HYHomeContent的constructor方法");
-  }
   @override
-  _HYHomeContentState createState() {
-    print("2.调用HYHomeContent的createState方法");
-    return _HYHomeContentState();
-  }
+  _HYHomeContentState createState() => _HYHomeContentState();
 }
 
 class _HYHomeContentState extends State<HYHomeContent> {
-  int _counter = 0;
-  _HYHomeContentState() {
-    print("3.调用_HYHomeContentState的constructor方法");
-  }
-
-  @override
-  void initState() {
-    // 强调：这里是必须调用super
-    super.initState();
-    print("4.调用_HYHomeContentState的initState方法");
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    print("调用_HYHomeContentState的didChangeDependencies方法");
-  }
-
-  @override
-  void didUpdateWidget(HYHomeContent oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    print("didUpdateWidget");
-  }
-
   @override
   Widget build(BuildContext context) {
-    print("5.调用_HYHomeContentState的build方法");
-    return Column(
-      children: [
-        RaisedButton(
-          child: Icon(Icons.add),
-          onPressed: (){
-            setState(() {
-              _counter++;
-            });
-          },
-        ),
-        Text("数字：$_counter")
-      ],
-    );
-  }
-  // 销毁的时候调用
-  @override
-  void dispose() {
-    super.dispose();
-    print("6.调用_HYHomeContentState的dispose方法");
+//    return ImageDemo01(imageURL: "https://dss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3669917020,2046613997&fm=26&gp=0.jpg",);
+//    return Image.network("https://dss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3669917020,2046613997&fm=26&gp=0.jpg");
+//    return Image(
+//      // 1. 在flutter项目中创建文件夹
+//      // 2.在pubspec.yaml进行配置
+//      image: AssetImage("assets/images/11.jpg"),
+//    );
+      return Image.asset("assets/images/11.jpg");
   }
 }
 
+class ImageDemo01 extends StatelessWidget {
+  const ImageDemo01({
+    Key key,
+    @required this.imageURL,
+  }) : super(key: key);
+
+  final String imageURL;
+  @override
+  Widget build(BuildContext context) {
+    return Image(
+      color: Colors.green,
+      colorBlendMode: BlendMode.colorDodge,
+      image: NetworkImage(
+        imageURL,
+      ),
+      width: 200,
+      height: 200,
+      fit: BoxFit.contain,
+      repeat: ImageRepeat.repeat,
+//      alignment: Alignment.topCenter,
+      // 范围：-1，1
+      alignment: Alignment(0, 0),
+    );
+  }
+
+}
 
 
