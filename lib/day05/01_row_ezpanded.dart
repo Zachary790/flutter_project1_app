@@ -41,33 +41,7 @@ class _HYHomeContentState extends State<HYHomeContent> {
   Widget build(BuildContext context) {
 //     MediaQuery.of(context).size.width;  //  获取屏幕的宽度
 
-     return RowDome2();
-  }
-}
-
-class RowDome2 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    /**
-     * stack默认的大小是包裹内容
-     * - alignment:从什么位置开始排布所有的子widget
-     * - fit：expand  将子元素拉伸到尽可能大
-     * - overflow:超出部分如何处理
-     *
-     * positioned
-     */
-    return Stack(
-      alignment: AlignmentDirectional.center,
-      fit: StackFit.expand,
-      children: [
-        Container(width: 150, height: 150, color: Colors.red,),
-        Image.asset("assets/images/11.jpg", width: 300,),
-        Positioned(  // 定位
-            right: 0,
-            child: Text("进击的巨人", style: TextStyle(color: Colors.white),)
-        )
-      ],
-    );
+     return RowDemo1();
   }
 }
 
