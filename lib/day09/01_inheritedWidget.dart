@@ -1,13 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-/**
- * 1.创建自己需要共享的数据
- */
-void main() {
-  runApp(MyApp());
-}
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
@@ -29,6 +23,7 @@ class HYHomePage extends StatefulWidget {
 }
 
 class _HYHomePageState extends State<HYHomePage> {
+  int _counter = 100;
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +33,9 @@ class _HYHomePageState extends State<HYHomePage> {
             child: Text("InheritedWidget")
         ),
       ),
-      body: Center(
+      body: HYCounterWidget(
+        counter: _counter,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             HYShowData01(),
             HYShowData02(),
@@ -51,7 +46,7 @@ class _HYHomePageState extends State<HYHomePage> {
         child: Icon(Icons.add),
         onPressed: () {
           setState(() {
-
+            _counter ++;
           });
         },
       ),
@@ -66,20 +61,43 @@ class HYShowData01 extends StatefulWidget {
 
 class _HYShowData01State extends State<HYShowData01> {
   @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    print('执行了');
+  }
+  @override
   Widget build(BuildContext context) {
     return Card(
       color: Colors.red,
-      child: Text("当前计数：100"),
+      child: Text("当前计数： ${HYCounterWidget.of(context).counter}"),
     );
   }
 }
-
 class HYShowData02 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.blue,
-      child: Text("当前计数：100"),
+      child: Text("当前计数：${HYCounterWidget.of(context).counter}"),
     );
   }
+}
+
+
+class HYCounterWidget extends InheritedWidget {
+  final int counter ;
+
+  HYCounterWidget({this.counter, Widget child}): super(child: child);
+
+  static HYCounterWidget of(BuildContext context) {
+    // 作用是沿着我们的element树找最近的HYCounterElement， 取出widget对象
+    return context.dependOnInheritedWidgetOfExactType();
+  }
+  // true：执行以来当前的InheritedWidget的State中的didChangeDependencies
+  @override
+  bool updateShouldNotify(HYCounterWidget oldWidget) {
+    return oldWidget.counter != counter;
+  }
+
 }
